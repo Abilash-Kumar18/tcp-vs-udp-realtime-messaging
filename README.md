@@ -1,11 +1,12 @@
 # TCP vs UDP — Real-Time Messaging over Two Protocols
 
 > **Live site:** <https://tcp-vs-udp-realtime-messaging.vercel.app>
+> **Gateway:** <https://cn4-gateway.onrender.com>
 > **Source:** <https://github.com/Abilash-Kumar18/tcp-vs-udp-realtime-messaging>
 >
-> The site is deployed and the gateway URL is baked in. Until the Render service
-> described in [Deploying](#7-deploying) is up, the status badge reads "Gateway
-> offline" — the page itself works, the sockets are simply not there yet.
+> Both halves are deployed and the pair has been verified end to end over the
+> public internet. Note that the free Render plan sleeps when idle, so the first
+> request after a quiet period waits out a cold start.
 
 A working real-time messaging application implemented **twice** — once over **TCP**
 (`net.createServer`) and once over **UDP** (`dgram.createSocket`) — wrapped in an
@@ -267,8 +268,8 @@ point of the project:
 
 Push the repository, then on Render choose **New → Blueprint** and point it at the
 repo. `render.yaml` declares the service, its health check (`/api/health`) and the
-chaos defaults. When it finishes you get a URL such as
-`https://cn4-gateway.onrender.com`.
+chaos defaults. When it finishes you get a URL such as `https://cn4-gateway.onrender.com` — that is
+the one this repository is currently using.
 
 > The free plan sleeps after ~15 minutes idle, so the first visitor after a quiet
 > period waits for a cold start (tens of seconds) and the badge in the top-left
