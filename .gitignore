@@ -2,6 +2,7 @@ node_modules/
 client/dist/
 .vercel/
 .env
+.env.local
 *.log
 .DS_Store
 .vscode/
