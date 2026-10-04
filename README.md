@@ -1,6 +1,11 @@
 # TCP vs UDP — Real-Time Messaging over Two Protocols
 
+> **Live site:** <https://tcp-vs-udp-realtime-messaging.vercel.app>
 > **Source:** <https://github.com/Abilash-Kumar18/tcp-vs-udp-realtime-messaging>
+>
+> The site is deployed and the gateway URL is baked in. Until the Render service
+> described in [Deploying](#7-deploying) is up, the status badge reads "Gateway
+> offline" — the page itself works, the sockets are simply not there yet.
 
 A working real-time messaging application implemented **twice** — once over **TCP**
 (`net.createServer`) and once over **UDP** (`dgram.createSocket`) — wrapped in an
@@ -271,18 +276,25 @@ chaos defaults. When it finishes you get a URL such as
 
 ### 2. Deploy the site to Vercel
 
+Already done for this repository — the site is at
+**<https://tcp-vs-udp-realtime-messaging.vercel.app>**, connected to `main`, so every
+push redeploys it. To repeat it from scratch:
+
 ```bash
 npm i -g vercel
 vercel login
-vercel --prod
+vercel link --yes --project tcp-vs-udp-realtime-messaging
+vercel --prod --yes
 ```
 
 `vercel.json` runs `npm --workspace client run build` and publishes `client/dist`.
-To point the site at the Render gateway, set the build-time variable first — in the
-Vercel project under **Settings → Environment Variables**, or in the CLI:
+The gateway address is a **project** environment variable (`VITE_GATEWAY_URL`, set for
+production, preview and development) rather than a one-off flag, so every automatic
+redeploy keeps pointing at the right host. Set it in the Vercel dashboard under
+**Settings → Environment Variables**, or once from the CLI:
 
 ```bash
-vercel --prod --build-env VITE_GATEWAY_URL=https://cn4-gateway.onrender.com
+vercel env add VITE_GATEWAY_URL production
 ```
 
 With `VITE_GATEWAY_URL` unset the site assumes the gateway is on its own origin,
