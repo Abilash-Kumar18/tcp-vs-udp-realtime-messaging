@@ -4,7 +4,6 @@
   "installCommand": "npm install",
   "buildCommand": "npm --workspace client run build",
   "outputDirectory": "client/dist",
-  "rewrites": [{ "source": "/((?!assets/).*)", "destination": "/index.html" }],
   "headers": [
     {
       "source": "/assets/(.*)",
