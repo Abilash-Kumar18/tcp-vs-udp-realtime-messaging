@@ -20,11 +20,13 @@ services:
     envVars:
       - key: NODE_VERSION
         value: "22"
-      # Loopback keeps the demo self-contained: the browser never speaks these
-      # protocols directly, it speaks WebSocket to this gateway, which then uses
-      # real sockets on the same host.
+      # Render's proxy connects to the service from outside the container, so the
+      # HTTP gateway must bind 0.0.0.0. Only the HTTP port is routed publicly, so
+      # the TCP and UDP backends stay unreachable from the internet — browsers
+      # speak WebSocket to the gateway, which then uses the real sockets on the
+      # same host.
       - key: HOST
-        value: "127.0.0.1"
+        value: "0.0.0.0"
       # Defaults for the network simulation. A cold-started demo starts honest:
       # 8% UDP loss, no added latency.
       - key: UDP_DROP
