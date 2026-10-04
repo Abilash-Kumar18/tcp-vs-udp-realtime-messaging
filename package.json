@@ -1,0 +1,29 @@
+{
+  "name": "tcp-vs-udp-realtime-messaging",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Real-time messaging app over TCP and UDP with an interactive teaching website (CN assignment).",
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "install:all": "npm install",
+    "dev": "concurrently -n server,client -c cyan,magenta \"npm:dev:server\" \"npm:dev:client\"",
+    "dev:server": "npm --workspace server run dev",
+    "dev:client": "npm --workspace client run dev",
+    "start": "npm --workspace server run start",
+    "build": "npm --workspace client run build",
+    "serve": "npm run build && npm start",
+    "test": "node test/run-all.mjs",
+    "test:server": "node server/test/smoke.mjs",
+    "test:render": "node client/test/render-check.mjs",
+    "test:ui": "node client/test/ui-test.mjs"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,43 @@
+# Render blueprint — deploys the gateway that owns the REAL TCP and UDP sockets.
+#
+# Why the gateway cannot live on Vercel: Vercel's serverless runtime cannot bind
+# a listening TCP socket or a UDP socket, so `net.createServer` (:4001) and
+# `dgram.createSocket` (:4002) have nowhere to run. The static React site is
+# deployed to Vercel and reaches this service over CORS + WebSocket.
+#
+# Deploy: https://render.com/docs/blueprint-spec  ->  New > Blueprint > point at
+# this repository. Or connect the repo manually as a Web Service.
+services:
+  - type: web
+    name: cn4-gateway
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      # Loopback keeps the demo self-contained: the browser never speaks these
+      # protocols directly, it speaks WebSocket to this gateway, which then uses
+      # real sockets on the same host.
+      - key: HOST
+        value: "127.0.0.1"
+      # Defaults for the network simulation. A cold-started demo starts honest:
+      # 8% UDP loss, no added latency.
+      - key: UDP_DROP
+        value: "0.08"
+      - key: UDP_ACK_DROP
+        value: "0.08"
+      - key: UDP_REORDER
+        value: "0.05"
+      - key: LATENCY_MS
+        value: "0"
+      - key: TCP_HANDSHAKE_RTT_MS
+        value: "0"
+      # Uncomment for a packet-level trace in the Render logs. Warning: this adds
+      # a log line per message, which inflates the measured RTT.
+      # - key: DEBUG_MESSAGES
+      #   value: "1"

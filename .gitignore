@@ -1,0 +1,8 @@
+node_modules/
+client/dist/
+.vercel/
+.env
+*.log
+.DS_Store
+.vscode/
+.idea/
