@@ -349,15 +349,4 @@ npm run test:ui       # 34 real DOM interaction checks
 
 ---
 
-## 9. Troubleshooting
 
-| Symptom | Cause / fix |
-| --- | --- |
-| `EADDRINUSE` on 3000/4001/4002 | Another copy is still running. Stop it, or move the ports:<br>POSIX `PORT=3100 TCP_PORT=4101 UDP_PORT=4102 npm start` · PowerShell `$env:PORT=3100; $env:TCP_PORT=4101; $env:UDP_PORT=4102; npm start` |
-| Port 3000 shows "Gateway is running" | No production build yet — open **5173** in dev mode, or run `npm run build` |
-| WebSocket says "Gateway offline" | The gateway is not running, or the page was opened from an origin the proxy does not cover (`GATEWAY=…`). On a deployed site, check that `VITE_GATEWAY_URL` points at the Render URL |
-| Deployed site renders but every socket hangs | `VITE_GATEWAY_URL` is missing or wrong. It is a **build-time** variable — rebuild/redeploy the site after changing it |
-| Render gateway never becomes healthy | Its health check polls `/api/health`; watch the Render logs. Remember the free plan sleeps when idle |
-| Measured RTT looks absurdly high (100 ms+) | Console logging is blocking the event loop. Leave `DEBUG_MESSAGES` unset; if you redirect output to a file on Windows, be aware that redirected stdout is synchronous |
-| Every UDP message arrives, no loss visible | Loss defaults to 8 %. Raise the **UDP message loss** knob in section 04, or restart with `UDP_DROP=0.5` (`$env:UDP_DROP=0.5` in PowerShell) |
-| The Code Showcase says the file is not allowed | Only `tcp-backend.js`, `udp-backend.js`, `tcp-link.js` and `udp-link.js` are whitelisted — by design |
