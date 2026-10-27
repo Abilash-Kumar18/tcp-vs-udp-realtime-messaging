@@ -4,9 +4,7 @@
 > **Gateway:** <https://cn4-gateway.onrender.com>
 > **Source:** <https://github.com/Abilash-Kumar18/tcp-vs-udp-realtime-messaging>
 >
-> Both halves are deployed and the pair has been verified end to end over the
-> public internet. Note that the free Render plan sleeps when idle, so the first
-> request after a quiet period waits out a cold start.
+
 
 A working real-time messaging application implemented **twice** — once over **TCP**
 (`net.createServer`) and once over **UDP** (`dgram.createSocket`) — wrapped in an
